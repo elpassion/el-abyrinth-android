@@ -1,0 +1,19 @@
+sudo: false
+language: android
+android:
+ components:
+ - platform-tools
+ - tools
+ - build-tools-23.0.2
+ - android-23
+ - extra-android-m2repository
+ - sys-img-armeabi-v7a-android-16
+
+install:
+- ./gradlew build
+
+before_script:
+- sh scripts/emulator.sh
+
+script:
+ - ./gradlew connectedCheck
