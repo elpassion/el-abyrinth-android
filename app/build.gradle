@@ -27,6 +27,10 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
 }
 
 dependencies {
@@ -50,3 +54,4 @@ repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
+
