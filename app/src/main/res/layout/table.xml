@@ -8,16 +8,21 @@
     android:padding="@dimen/app_padding">
 
     <Button
+        android:id="@+id/game_card_1"
+        style="@style/card_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="card" />
+        android:text="@string/card_back" />
 
     <Button
+        android:id="@+id/game_card_2"
+        style="@style/card_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="card" />
+        android:text="@string/card_back" />
 
     <TextView
+        android:id="@+id/court_money"
         style="@style/coin_style"
         android:layout_width="@dimen/coin_size"
         android:layout_height="@dimen/coin_size"

@@ -2,6 +2,6 @@ package pl.elpassion.elmascarar.dataModel
 
 import java.util.*
 
-class Game(var players: MutableList<Player>, var cards: MutableList<Card> = ArrayList(), var courtMoney: Int = 0) {
+class Game(val players: MutableList<Player>, val cards: MutableList<Card> = ArrayList(), val courtMoney: Int = 0, val activePlayerId: Int = 0) {
 
 }

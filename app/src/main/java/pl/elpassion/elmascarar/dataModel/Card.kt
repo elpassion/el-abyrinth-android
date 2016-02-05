@@ -1,4 +1,4 @@
 package pl.elpassion.elmascarar.dataModel
 
-class Card(var name: String) {
+class Card(val name: String, val isFaceDown: Boolean = true) {
 }

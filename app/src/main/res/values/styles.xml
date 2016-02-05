@@ -22,4 +22,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/coin</item>
     </style>
+    <style name="card_style">
+        <item name="android:clickable">false</item>
+    </style>
 </resources>
