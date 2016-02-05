@@ -21,4 +21,10 @@ class PreferencesWrapper(val prefs: SharedPreferences) {
         return null
     }
 
+    fun savePlayerId(playerId : Int){
+        prefs.edit()
+                .putInt(playerIdKey, playerId)
+                .apply()
+    }
+
 }

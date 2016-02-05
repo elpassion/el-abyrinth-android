@@ -17,12 +17,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        connectionHandler.startThreadToObtainPlayerId(pref.getPlayerId())
+        val playerId = pref.getPlayerId()
+        connectionHandler.startThreadToObtainPlayerId(playerId)
         setUpPlayers()
     }
 
     fun onEvent(onAssignedToGame: OnAssignedToGame) {
-        connectionHandler.startThreadToJoinGame(onAssignedToGame.playerId, onAssignedToGame.gameId)
+        val playerId = onAssignedToGame.playerId
+        val gameId = onAssignedToGame.gameId
+        pref.savePlayerId(playerId)
+        connectionHandler.startThreadToJoinGame(playerId, gameId)
     }
 
     private fun setUpPlayers() {
