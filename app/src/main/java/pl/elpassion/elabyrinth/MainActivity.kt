@@ -5,7 +5,7 @@ import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.ImageView
-import pl.elpassion.elmascarar.R
+import pl.elpassion.elabyrinth.R
 
 class MainActivity : AppCompatActivity() {
 

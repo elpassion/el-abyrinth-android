@@ -1,4 +1,4 @@
-package pl.elpassion.elmascarar;
+package pl.elpassion.elabyrinth;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

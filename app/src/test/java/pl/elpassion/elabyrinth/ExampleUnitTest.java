@@ -1,4 +1,4 @@
-package pl.elpassion.elmascarar;
+package pl.elpassion.elabyrinth;
 
 import org.junit.Test;
 

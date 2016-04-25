@@ -6,7 +6,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "pl.elpassion.elmascarar"
+        applicationId "pl.elpassion.elabytinth"
         minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
