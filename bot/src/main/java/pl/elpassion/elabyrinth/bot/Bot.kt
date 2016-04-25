@@ -11,14 +11,16 @@ object Bot {
 
     @JvmStatic fun main(args: Array<String>) {
         socket.onGame { game = it }
-//        Thread.sleep(1000)
-//        walkThrough(Board(game.map).solve())
+        Thread {
+            Thread.sleep(5000)
+            walkThrough(Board(game.map).solve())
+        }.start()
     }
 
     val walkThrough: (List<Direction>) -> Unit = {
         it.forEach {
             Thread.sleep(1000)
-            socket.move(Direction.DOWN)
+            socket.move(it)
         }
     }
 }
