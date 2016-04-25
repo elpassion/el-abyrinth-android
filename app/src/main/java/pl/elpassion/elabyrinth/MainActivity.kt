@@ -5,7 +5,6 @@ import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.ImageView
-import pl.elpassion.elabyrinth.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.labyrinth)
 
         socket.onGame(onMap, onPlayers)
-        labyrinth.setOnClickListener { socket.move(Direction.DOWN);socket.move(Direction.RIGHT) }
+        labyrinth.setOnTouchListener(DirectionDispatcher({ socket.move(it) }))
     }
 
     val onMap: (List<List<Cell>>) -> Unit = { map ->
