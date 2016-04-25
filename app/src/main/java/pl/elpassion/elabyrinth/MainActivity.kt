@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.ImageView
 import pl.elpassion.elabyrinth.core.Game
 import pl.elpassion.elabyrinth.core.LabyrinthSocket
+import pl.elpassion.elabyrinth.core.Player
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.labyrinth)
 
-        socket.onGame(onGame)
+        socket.onGame(GameStateSavingProxy(onGame, onPlayersOnly))
         labyrinth.setOnTouchListener(DirectionDispatcher({
             Thread { socket.move(it) }.start()
         }))
@@ -42,6 +43,22 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    val onPlayersOnly: (List<Player>, List<Player>) -> Unit = { old, new ->
+        runOnUiThread({
+            old.forEach { player ->
+                val rowView = labyrinth.getChildAt(player.y) as ViewGroup
+                val cellView = rowView.getChildAt(player.x) as ImageView
+                cellView.setImageDrawable(null)
+            }
+            new.forEach { player ->
+                val rowView = labyrinth.getChildAt(player.y) as ViewGroup
+                val cellView = rowView.getChildAt(player.x) as ImageView
+                cellView.setImageResource(player.imageResource)
+            }
+        })
+    }
+
 }
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int): View {
