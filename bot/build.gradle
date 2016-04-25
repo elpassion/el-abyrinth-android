@@ -2,8 +2,9 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 
 dependencies {
+    compile project(":core")
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'com.github.eoinsha:JavaPhoenixChannels:0c86641f15'
+    compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
 }
 buildscript {
     ext.kotlin_version = '1.0.0-rc-1036'
@@ -18,4 +19,3 @@ repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
-
