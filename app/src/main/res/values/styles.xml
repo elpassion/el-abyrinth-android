@@ -20,7 +20,7 @@
     <style name="coin_style">
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/coin</item>
+        <item name="android:background">@drawable/player</item>
     </style>
     <style name="card_style">
         <item name="android:clickable">false</item>
