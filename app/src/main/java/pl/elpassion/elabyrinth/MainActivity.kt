@@ -17,26 +17,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.labyrinth)
 
-        socket.onGame(onMap, onPlayers)
+        socket.onGame(onGame)
         labyrinth.setOnTouchListener(DirectionDispatcher({ socket.move(it) }))
     }
 
-    val onMap: (List<List<Cell>>) -> Unit = { map ->
+    val onGame: (Game) -> Unit = { game ->
         runOnUiThread({
             labyrinth.removeAllViews()
-            map.forEach { row ->
+            game.map.forEach { row ->
                 val rowView = labyrinth.inflate(R.layout.row) as ViewGroup
                 row.forEach { cell ->
                     rowView.addView(rowView.inflate(cell.layoutRes))
                 }
                 labyrinth.addView(rowView)
             }
-        })
-    }
-
-    val onPlayers: (List<Player>) -> Unit = { players ->
-        runOnUiThread({
-            players.forEach { player ->
+            game.players.forEach { player ->
                 val rowView = labyrinth.getChildAt(player.y) as ViewGroup
                 val cellView = rowView.getChildAt(player.x) as ImageView
                 cellView.setImageResource(player.getImageResource())
