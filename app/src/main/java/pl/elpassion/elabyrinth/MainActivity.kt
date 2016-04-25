@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             game.players.forEach { player ->
                 val rowView = labyrinth.getChildAt(player.y) as ViewGroup
                 val cellView = rowView.getChildAt(player.x) as ImageView
-                cellView.setImageResource(player.getImageResource())
+                cellView.setImageResource(player.imageResource)
             }
         })
     }
