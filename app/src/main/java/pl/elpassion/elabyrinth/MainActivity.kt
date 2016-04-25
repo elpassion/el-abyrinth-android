@@ -3,9 +3,7 @@ package pl.elpassion.elabyrinth
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import pl.elpassion.elmascarar.R
 
@@ -15,6 +13,8 @@ class MainActivity : AppCompatActivity() {
     val socket by lazy { LabyrinthSocket() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.labyrinth)
 
