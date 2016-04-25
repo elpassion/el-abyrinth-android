@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import pl.elpassion.elmascarar.R
 
@@ -18,8 +19,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.labyrinth)
 
-        socket.onMap(onMap)
-        labyrinth.setOnClickListener { socket.move(Direction.DOWN) }
+        socket.onGame(onMap, onPlayers)
+        labyrinth.setOnClickListener { socket.move(Direction.DOWN);socket.move(Direction.RIGHT) }
     }
 
     val onMap: (List<List<Cell>>) -> Unit = { map ->
@@ -31,6 +32,16 @@ class MainActivity : AppCompatActivity() {
                     rowView.addView(rowView.inflate(cell.layoutRes))
                 }
                 labyrinth.addView(rowView)
+            }
+        })
+    }
+
+    val onPlayers: (List<Player>) -> Unit = { players ->
+        runOnUiThread({
+            players.forEach { player ->
+                val rowView = labyrinth.getChildAt(player.y) as ViewGroup
+                val cellView = rowView.getChildAt(player.x) as ImageView
+                cellView.setImageResource(R.drawable.coin)
             }
         })
     }
