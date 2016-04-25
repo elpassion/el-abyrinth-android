@@ -1,6 +1,5 @@
 package pl.elpassion.elabyrinth
 
-import android.util.Log
 import com.fasterxml.jackson.databind.JsonNode
 import org.phoenixframework.channels.Socket
 import java.util.*
@@ -21,13 +20,18 @@ class LabyrinthSocket {
 
     fun onGame(onMap: (List<List<Cell>>) -> Unit, onPlayers: (List<Player>) -> Unit) {
         channel.on("game", {
+            val id = ""
             onMap(it.payload.get("map").map { row -> row.map { cell -> Cell.fromInt(cell.intValue()) } })
-            onPlayers(it.payload.get("players").elements().map { Player(it.get("x").intValue(), it.get("y").intValue()) })
+            onPlayers(it.payload.get("players").fields().map { playerFromNode(it, id) })
         })
+    }
+
+    private fun playerFromNode(entry: MutableMap.MutableEntry<String, JsonNode>, id: String): Player {
+        return Player(entry.value.get("x").intValue(), entry.value.get("y").intValue(), entry.key == id)
     }
 }
 
-fun <R> Iterator<JsonNode>.map(transform: (JsonNode) -> R): List<R> {
+fun <T, R> Iterator<T>.map(transform: (T) -> R): List<R> {
     val list = ArrayList<R>()
     while (this.hasNext()) {
         list.add(transform(this.next()))
