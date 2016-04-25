@@ -7,12 +7,18 @@ import pl.elpassion.elabyrinth.core.LabyrinthSocket
 object Bot {
 
     val socket by lazy { LabyrinthSocket() }
+    lateinit var game: Game
 
     @JvmStatic fun main(args: Array<String>) {
-        socket.onGame(onGame)
+        socket.onGame { game = it }
+//        Thread.sleep(1000)
+//        walkThrough(Board(game.map).solve())
     }
 
-    val onGame: (Game) -> Unit = {
-        socket.move(Direction.DOWN)
+    val walkThrough: (List<Direction>) -> Unit = {
+        it.forEach {
+            Thread.sleep(1000)
+            socket.move(Direction.DOWN)
+        }
     }
 }

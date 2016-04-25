@@ -20,7 +20,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.labyrinth)
 
         socket.onGame(onGame)
-        labyrinth.setOnTouchListener(DirectionDispatcher({ socket.move(it) }))
+        labyrinth.setOnTouchListener(DirectionDispatcher({
+            Thread { socket.move(it) }.start()
+        }))
     }
 
     val onGame: (Game) -> Unit = { game ->
