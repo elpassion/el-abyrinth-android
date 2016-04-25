@@ -25,7 +25,7 @@ class LabyrinthSocket {
     fun onGame(onMap: (List<List<Cell>>) -> Unit, onPlayers: (List<Player>) -> Unit) {
         channel.on("game", {
             onMap(it.payload.get("map").map { row -> row.map { cell -> Cell.fromInt(cell.intValue()) } })
-            onPlayers(it.payload.get("players").fields().map { playerFromNode(it, id) })
+            onPlayers(it.payload.get("players").fields().map { playerFromNode(it, id) }.sortedBy { it.self })
         })
     }
 
