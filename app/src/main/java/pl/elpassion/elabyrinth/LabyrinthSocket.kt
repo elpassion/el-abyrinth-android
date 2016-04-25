@@ -22,13 +22,15 @@ class LabyrinthSocket {
     fun onGame(onMap: (List<List<Cell>>) -> Unit, onPlayers: (List<Player>) -> Unit) {
         channel.on("game", {
             onMap(it.payload.get("map").map { row -> row.map { cell -> Cell.fromInt(cell.intValue()) } })
-            onPlayers(it.payload.get("players").elements().map { Player(it.get("y").intValue(), it.get("y").intValue()) })
+            onPlayers(it.payload.get("players").elements().map { Player(it.get("x").intValue(), it.get("y").intValue()) })
         })
     }
 }
 
 fun <R> Iterator<JsonNode>.map(transform: (JsonNode) -> R): List<R> {
     val list = ArrayList<R>()
-    list.add(transform(this.next()))
+    while (this.hasNext()) {
+        list.add(transform(this.next()))
+    }
     return list
 }
