@@ -1,20 +1,13 @@
 package pl.elpassion.elabyrinth
 
 import android.os.Bundle
+import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.fasterxml.jackson.databind.node.JsonNodeFactory
-import com.fasterxml.jackson.databind.node.ObjectNode
-import de.greenrobot.event.EventBus
-import org.phoenixframework.channels.Channel
-import org.phoenixframework.channels.Envelope
-import org.phoenixframework.channels.Socket
 import pl.elpassion.elmascarar.R
-import pl.elpassion.elmascarar.dataModel.Card
-import pl.elpassion.elmascarar.dataModel.Player
-import pl.elpassion.elmascarar.viewModels.PlayerView
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,11 +18,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.labyrinth)
 
-        socket.onGame(onGame)
+        socket.onMap(onMap)
         labyrinth.setOnClickListener { socket.move(Direction.DOWN) }
     }
 
-    val onGame: (Envelope) -> Unit = {
-        Log.e("game", it.toString())
+    val onMap: (List<List<Cell>>) -> Unit = { map ->
+        runOnUiThread({
+            labyrinth.removeAllViews()
+            map.forEach { row ->
+                val rowView = labyrinth.inflate(R.layout.row) as ViewGroup
+                row.forEach { cell ->
+                    rowView.addView(rowView.inflate(cell.layoutRes))
+                }
+                labyrinth.addView(rowView)
+            }
+        })
     }
+}
+
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int): View {
+    return LayoutInflater.from(context).inflate(layoutRes, this, false)
 }

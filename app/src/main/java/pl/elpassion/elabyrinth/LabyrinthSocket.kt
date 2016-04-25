@@ -1,7 +1,5 @@
 package pl.elpassion.elabyrinth
 
-import android.util.Log
-import org.phoenixframework.channels.Envelope
 import org.phoenixframework.channels.Socket
 
 class LabyrinthSocket {
@@ -14,8 +12,10 @@ class LabyrinthSocket {
         }
     }
 
-    fun onGame(function: (Envelope) -> Unit) {
-        channel.on("game", function)
+    fun onMap(function: (List<List<Cell>>) -> Unit) {
+        channel.on("game", {
+            function(it.payload.get("map").map { row -> row.map { cell -> Cell.fromInt(cell.intValue()) } })
+        })
     }
 
     fun move(direction: Direction) {
