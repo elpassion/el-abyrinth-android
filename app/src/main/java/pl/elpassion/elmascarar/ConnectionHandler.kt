@@ -12,38 +12,19 @@ class ConnectionHandler {
 
     companion object {
         val bus = EventBus.getDefault()
-        val serverEndPoint = "ws://el-mascarar.herokuapp.com/socket/websocket"
         val playerIdKey = "player_id"
         val gameIdKey = "game_id"
-        val lobbyChannelKey = "games:lobby"
         val gameChannelKey = "join:game"
-        val okKey = "ok"
-    }
-
-    fun startThreadToObtainPlayerId(playerId: Int? = null) {
-        try {
-            obtainPlayerId(playerId)
-        } catch (e: Exception) {
-            bus.post(OnServerConnectionError(e))
-        }
-    }
-
-    fun startThreadToJoinGame(playerId: Int, gameId: Int) {
-        try {
-            joinGame(playerId, gameId)
-        } catch (e: Exception) {
-            bus.post(OnServerConnectionError(e))
-        }
     }
 
     private fun obtainPlayerId(playerId: Int?) {
         val payload = ObjectNode(JsonNodeFactory.instance)
                 .put(playerIdKey, playerId)
-        val socket: Socket = Socket(serverEndPoint)
+        val socket: Socket = Socket("ws://el-mascarar.herokuapp.com/socket/websocket")
         socket.connect()
-        val channel: Channel = socket.chan(lobbyChannelKey, payload)
+        val channel: Channel = socket.chan("games:lobby", payload)
         channel.join()
-                .receive(okKey, onConnectedToChannel)
+                .receive("ok", onConnectedToChannel)
     }
 
     private val onConnectedToChannel = { envelope: Envelope ->
@@ -58,11 +39,11 @@ class ConnectionHandler {
         val payload = ObjectNode(JsonNodeFactory.instance)
                 .put(playerIdKey, playerId)
                 .put(gameIdKey, gameId)
-        val socket: Socket = Socket(serverEndPoint)
+        val socket: Socket = Socket("ws://el-mascarar.herokuapp.com/socket/websocket")
         socket.connect()
         val channel: Channel = socket.chan(gameChannelKey, payload)
         channel.join()
-                .receive(okKey, { envelope ->
+                .receive("ok", { envelope ->
 
                 })
     }
