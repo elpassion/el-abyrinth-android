@@ -2,7 +2,8 @@ package pl.elpassion.elabyrinth
 
 import android.view.MotionEvent
 import android.view.View
-import pl.elpassion.elabyrinth.Direction.*
+import pl.elpassion.elabyrinth.core.Direction
+import pl.elpassion.elabyrinth.core.Direction.*
 
 class DirectionDispatcher(val directionListener: (Direction) -> Unit) : View.OnTouchListener {
 

@@ -1,4 +1,4 @@
-package pl.elpassion.elabyrinth
+package pl.elpassion.elabyrinth.core
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
 import com.fasterxml.jackson.databind.node.ObjectNode

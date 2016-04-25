@@ -1,4 +1,6 @@
-package pl.elpassion.elabyrinth
+package pl.elpassion.elabyrinth.core
+
+import pl.elpassion.elabyrinth.R
 
 data class Player(val x: Int, val y: Int, val self: Boolean) {
 

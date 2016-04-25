@@ -1,4 +1,4 @@
-package pl.elpassion.elabyrinth
+package pl.elpassion.elabyrinth.core
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.phoenixframework.channels.Socket
@@ -24,8 +24,8 @@ class LabyrinthSocket {
     fun onGame(onGame: (Game) -> Unit) {
         channel.on("game", {
             onGame(Game(
-                it.payload.get("map").map { row -> row.map { cell -> Cell.fromInt(cell.intValue()) } },
-                it.payload.get("players").fields().map { playerFromNode(it, id) }.sortedBy { it.self }))
+                    it.payload.get("map").map { row -> row.map { cell -> Cell.Companion.fromInt(cell.intValue()) } },
+                    it.payload.get("players").fields().map { playerFromNode(it, id) }.sortedBy { it.self }))
         })
     }
 

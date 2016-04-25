@@ -1,6 +1,7 @@
 package pl.elpassion.elabyrinth
 
-import pl.elpassion.elabyrinth.Cell.*
+import pl.elpassion.elabyrinth.core.Cell
+import pl.elpassion.elabyrinth.core.Cell.*
 
 val Cell.layoutRes: Int
     get() = when (this) {
