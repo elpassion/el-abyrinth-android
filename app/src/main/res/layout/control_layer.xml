@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
+        android:layout_gravity="bottom|end"
         android:orientation="vertical">
 
         <LinearLayout
@@ -20,18 +20,18 @@
             android:orientation="horizontal">
 
             <View
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
 
-            <View
+            <ImageView
                 android:id="@+id/control_up"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="#66666666" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/pad_up" />
 
             <View
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -39,21 +39,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <View
+            <ImageView
                 android:id="@+id/control_left"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="#66666666" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/pad_left" />
 
-            <View
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/pad_middle" />
 
-            <View
+            <ImageView
                 android:id="@+id/control_right"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="#66666666" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/pad_right" />
         </LinearLayout>
 
         <LinearLayout
@@ -62,18 +63,18 @@
             android:orientation="horizontal">
 
             <View
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
 
-            <View
+            <ImageView
                 android:id="@+id/control_down"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="#66666666" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/pad_down" />
 
             <View
-                android:layout_width="60dp"
-                android:layout_height="60dp" />
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>
