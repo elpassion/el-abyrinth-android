@@ -3,6 +3,7 @@ package pl.elpassion.elabyrinth
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import pl.elpassion.elabyrinth.core.Direction
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     val labyrinth: ViewGroup by lazy { findViewById(R.id.labyrinth) as ViewGroup }
     val socket by lazy { LabyrinthSocket() }
+    val playerLocation = IntArray(2)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -22,10 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.labyrinth)
 
         socket.onGame(GameStateSavingProxy(onGame, onPlayersOnly))
-        findViewById(R.id.control_up).setOnClickListener { Thread { socket.move(Direction.UP) }.start() }
-        findViewById(R.id.control_right).setOnClickListener { Thread { socket.move(Direction.RIGHT) }.start() }
-        findViewById(R.id.control_left).setOnClickListener { Thread { socket.move(Direction.LEFT) }.start() }
-        findViewById(R.id.control_down).setOnClickListener { Thread { socket.move(Direction.DOWN) }.start() }
+        findViewById(R.id.control_layer).setOnTouchListener(SwipeAndClickControl(move, getPlayerPosition))
     }
 
     val onGame: (Game) -> Unit = { game ->
@@ -38,11 +37,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 labyrinth.addView(rowView)
             }
-            game.players.forEach { player ->
-                val rowView = labyrinth.getChildAt(player.y) as ViewGroup
-                val cellView = rowView.getChildAt(player.x) as ImageView
-                cellView.setImageResource(player.imageResource)
-            }
+            game.players.showPlayers()
         })
     }
 
@@ -53,14 +48,29 @@ class MainActivity : AppCompatActivity() {
                 val cellView = rowView.getChildAt(player.x) as ImageView
                 cellView.setImageDrawable(null)
             }
-            new.forEach { player ->
-                val rowView = labyrinth.getChildAt(player.y) as ViewGroup
-                val cellView = rowView.getChildAt(player.x) as ImageView
-                cellView.setImageResource(player.imageResource)
-            }
+            new.showPlayers()
         })
     }
 
+    private fun List<Player>.showPlayers() {
+        forEach { player ->
+            val rowView = labyrinth.getChildAt(player.y) as ViewGroup
+            val cellView = rowView.getChildAt(player.x) as ImageView
+            cellView.setImageResource(player.imageResource)
+            if (player.self) {
+                cellView.getLocationOnScreen(playerLocation)
+            }
+        }
+    }
+
+    val getPlayerPosition: () -> Pair<Float, Float> = {
+        playerLocation[0].toFloat() to playerLocation[1].toFloat()
+    }
+
+    val move: (Direction) -> Unit = {
+        Log.e("Move", it.toString())
+        socket.move(it)
+    }
 }
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int): View {
