@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
     val move: (Direction) -> Unit = {
         Log.e("Move", it.toString())
-        socket.move(it)
+        Thread { socket.move(it) }.start()
     }
 }
 
