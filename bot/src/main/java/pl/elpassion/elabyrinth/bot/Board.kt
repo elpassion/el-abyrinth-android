@@ -7,17 +7,19 @@ import java.util.*
 class Board {
 
     val map: Set<Field>
-    val start = Field(1, 1)
-    val visited: MutableSet<Field> = mutableSetOf(start)
+    val start: Field
     val finish: Field
+    val visited: MutableSet<Field>
 
     constructor(map: List<List<Cell>>) {
         this.map = map.withIndex().map { row -> val y = row.index; row.value.withIndex().filter { it.value != Cell.WALL }.map { Field(it.index, y) } }.flatten().toSet()
+        this.start = map.withIndex().map { row -> val y = row.index; row.value.withIndex().filter { it.value == Cell.START }.map { Field(it.index, y) } }.flatten().first()
         this.finish = map.withIndex().map { row -> val y = row.index; row.value.withIndex().filter { it.value == Cell.END }.map { Field(it.index, y) } }.flatten().first()
+        this.visited = mutableSetOf(start)
     }
 
     fun solve(): List<Direction> {
-        return solve(Stack<Field>().apply { push(Field(1, 1)) })
+        return solve(Stack<Field>().apply { push(start) })
     }
 
     private fun solve(stack: Stack<Field>): List<Direction> {

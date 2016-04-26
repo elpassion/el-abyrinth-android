@@ -28,7 +28,7 @@ object Bot {
 
     val walkThrough: (List<Direction>) -> Unit = {
         it.forEach {
-            Thread.sleep(100L)
+            Thread.sleep(300L)
             socket.move(it)
         }
     }

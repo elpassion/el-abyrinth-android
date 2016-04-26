@@ -6,7 +6,10 @@ import java.util.*
 
 class LabyrinthSocket {
 
-    val socket = Socket("wss://stark-refuge-21372.herokuapp.com/socket/websocket")
+//    private val endpoint = "wss://stark-refuge-21372.herokuapp.com/socket/websocket"
+    private val endpoint = "ws://192.168.1.143:4000/socket/websocket"
+
+    val socket = Socket(endpoint)
     val channel by lazy {
         socket.connect()
         socket.chan("games:lobby", null).apply {
