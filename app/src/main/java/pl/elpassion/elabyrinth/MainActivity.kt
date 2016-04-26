@@ -5,6 +5,7 @@ import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.ImageView
+import pl.elpassion.elabyrinth.core.Direction
 import pl.elpassion.elabyrinth.core.Game
 import pl.elpassion.elabyrinth.core.LabyrinthSocket
 import pl.elpassion.elabyrinth.core.Player
@@ -21,9 +22,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.labyrinth)
 
         socket.onGame(GameStateSavingProxy(onGame, onPlayersOnly))
-        labyrinth.setOnTouchListener(DirectionDispatcher({
-            Thread { socket.move(it) }.start()
-        }))
+        findViewById(R.id.control_up).setOnClickListener { Thread { socket.move(Direction.UP) }.start() }
+        findViewById(R.id.control_right).setOnClickListener { Thread { socket.move(Direction.RIGHT) }.start() }
+        findViewById(R.id.control_left).setOnClickListener { Thread { socket.move(Direction.LEFT) }.start() }
+        findViewById(R.id.control_down).setOnClickListener { Thread { socket.move(Direction.DOWN) }.start() }
     }
 
     val onGame: (Game) -> Unit = { game ->
